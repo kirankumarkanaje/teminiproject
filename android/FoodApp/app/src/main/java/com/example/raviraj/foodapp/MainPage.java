@@ -9,16 +9,21 @@ import android.widget.Toast;
 
 public class MainPage extends Activity {
 
+    String userid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userid=  getIntent().getStringExtra("user_id");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainpage);
     }
 
     public void getMenu(View v){
         Toast.makeText(this, ((Button)v).getText(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainPage.this,Activity1.class);
+        Intent intent = new Intent(MainPage.this,RestaurantListActivity.class);
         intent.putExtra("click_type", ((Button)v).getText());
+        intent.putExtra("user_id", userid);
         startActivity(intent);
     }
 }

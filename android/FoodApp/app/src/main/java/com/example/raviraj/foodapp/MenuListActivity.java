@@ -18,13 +18,16 @@ import java.util.List;
 public class MenuListActivity extends Activity {
 
     private ListView listView;
+    int restaurantId;
+
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);
-
-        int restaurantId = getIntent().getIntExtra("restaurant_id", 0);
+        userid = getIntent().getStringExtra("user_id");
+        restaurantId = getIntent().getIntExtra("restaurant_id", 0);
         final MenuListAdapter menuList = new MenuListAdapter(this, getMenu(restaurantId));
         listView = (ListView)findViewById(R.id.listItems);
         listView.setAdapter(menuList);
@@ -69,6 +72,8 @@ public class MenuListActivity extends Activity {
         Intent intent = new Intent(MenuListActivity.this, ConfirmOrderActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("order_items", selectedItems);
+        bundle.putString("user_id", userid);
+        bundle.putInt("restaurant_id", restaurantId);
         intent.putExtras(bundle);
         startActivity(intent);
     }

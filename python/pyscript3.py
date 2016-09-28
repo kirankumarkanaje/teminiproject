@@ -10,8 +10,7 @@ urls = (
 	'/signup', 'signup',
 	'/vsignup', 'get_vsignup',
 	'/vsignin', 'get_vsignin',
-	'/allorders', 'get_allorders',
-	'/orders' , 'postorders'
+	'/placeorder', 'place_order'
 	)
 
 app = web.application(urls, globals())
@@ -83,8 +82,11 @@ class login:
        query = ("select * from usertable where user_name = '{}' and password = '{}'".format(username, password)) 
        print "Query: "+ query
        cursor.execute(query)
+       
+       returnuserid = ''			 
 			 
        for(User_ID , user_name, password) in cursor:
+           returnuserid = User_ID
            count +=1
 			 
        cursor.close()
@@ -96,7 +98,11 @@ class login:
            response = "FAIL"
        else:
            response = "SUCCESS" 
-       return response
+           
+       user_json={}
+       user_json['user_id']=returnuserid
+       user_json['status']=response    
+       return json.dumps(user_json)
 
 
 class signup:
@@ -180,8 +186,42 @@ class get_vsignin:
        return response
     	
 
-#		menu_json = {}
-#		menu_json['menu'] = json_data
-#		return json.dumps(menu_json)
+class place_order:
+    def POST(self):
+       data = web.data()
+       print "=================================="
+       print str(data)
+       print "=================================="
+       jsondata = json.loads(data)
+       userid= jsondata["user_id"]
+       restaurantid= jsondata["restaurant_id"]
+       totalAmount= jsondata["total_amount"]
+       con = mysql.connector.connect(user = 'root', password = 'root', database = 'food')
+       cursor = con.cursor(buffered=True)
+       query = ("insert into ordertable(u_id,R_ID,total,DateAndTime) values({},{},{}, NOW())".format(userid,restaurantid,totalAmount))
+       print "Query: "+ query
+       cursor.execute(query)
+       con.commit()
+       
+       query = ("select o_id from ordertable order by o_id DESC")
+       cursor.execute(query)
+       orderid=-1
+       for(o_id) in cursor:
+			orderid=o_id
+			break
+
+       itemids = jsondata["item_ids"]
+       for item_id in itemids:
+           query = ("insert into orders(o_id, R_ID, u_id, Item_ID, status) values({},{},{},{},'PENDING')".format(orderid[0], restaurantid, userid, item_id))
+           print "Executing query: " + query
+           cursor.execute(query)
+           
+       con.commit()
+
+       cursor.close()
+       con.close()
+       
+			
+
 if __name__=="__main__":
 	app.run()
