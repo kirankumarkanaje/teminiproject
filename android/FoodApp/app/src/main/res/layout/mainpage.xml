@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:scaleType = "centerCrop"/>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+    <Button
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:text="INDIAN"
+        android:id="@+id/button2"
+        android:onClick="getMenu"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:text="CHINESE"
+        android:id="@+id/button3"
+        android:onClick="getMenu"
+        android:layout_weight="1"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+    <Button
+         android:layout_width="210dp"
+         android:layout_height="210dp"
+         android:text="ITALIAN"
+         android:id="@+id/button4"
+        android:onClick="getMenu"
+        android:layout_weight="1"
+        />
+
+        <Button
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:text="MEXICAN"
+            android:id="@+id/button5"
+            android:onClick="getMenu"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                android:text="AMERICAN"
+
+                android:id="@+id/button6"
+                android:onClick="getMenu"
+                android:layout_weight="1"
+                />
+
+            <Button
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                android:text="CAFE"
+                android:id="@+id/button7"
+                android:onClick="getMenu"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <Button
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:text="CONTINENTAL"
+                    android:id="@+id/button8"
+                    android:onClick="getMenu"
+                    android:layout_weight="1"
+                    />
+
+                <Button
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:text="SWASTATMAST"
+                    android:id="@+id/button9"
+                    android:onClick="getMenu"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+</LinearLayout>
+
+</ScrollView>
+    </FrameLayout>
