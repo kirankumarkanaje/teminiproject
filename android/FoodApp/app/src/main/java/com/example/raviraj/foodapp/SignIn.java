@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ public class SignIn extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signin);
+        setContentView(R.layout.launcher);
     }
 
     public void onButtonClick(View v) {
@@ -51,4 +52,11 @@ public class SignIn extends Activity {
         }
 
     }
+    public void getSignup(View v) {
+        Intent intent = new Intent(SignIn.this, SignUp.class);
+        startActivity(intent);
+
+
+    }
+
 }

@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:largeHeap="true">
-        <activity android:name=".Registration">
+        <activity android:name=".SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,15 +17,14 @@
 
         </activity>
         <activity android:name=".SignUp"/>
-        <activity android:name=".SignIn"/>
+
         <activity android:name=".MainPage"/>
         <activity android:name=".RestaurantListActivity"/>
 
 
         <activity android:name=".MenuListActivity"/>
         <activity android:name=".ConfirmOrderActivity"/>
-        <activity android:name=".Billing"/>
-
+        <activity android:name=".LastPage"/>
 
 
     </application>

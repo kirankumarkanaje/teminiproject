@@ -74,7 +74,10 @@ public class ConfirmOrderActivity extends Activity {
 
         // make post call
         Toast.makeText(this, orderJson.toString(), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(ConfirmOrderActivity.this,LastPage.class);
+        startActivity(intent);
         final String url = "http://10.0.2.2:8080/placeorder" ;
+
 
         try {
             new OrderHttpPostHelper().execute(url, orderJson.toString()).get();
@@ -83,5 +86,7 @@ public class ConfirmOrderActivity extends Activity {
         }
 
     }
+
+
 
 }
