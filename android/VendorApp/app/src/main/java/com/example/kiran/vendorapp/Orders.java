@@ -17,28 +17,28 @@ public class Orders extends Activity{
 
     public void getAllOrders(View v){
         Toast.makeText(this, ((Button)v).getText(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Orders.this, MainActivity.class);
+        Intent intent = new Intent(Orders.this, OrderListActivity.class);
         startActivity(intent);
 
     }
 
     public void getPendingOrders(View v){
         Toast.makeText(this, ((Button)v).getText(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Orders.this, MainActivity.class);
+        Intent intent = new Intent(Orders.this, OrderListActivity.class);
         startActivity(intent);
 
     }
 
     public void getOrdersUp(View v){
         Toast.makeText(this, ((Button)v).getText(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Orders.this, MainActivity.class);
+        Intent intent = new Intent(Orders.this, OrderListActivity.class);
         startActivity(intent);
 
     }
 
     public void getTakeOrders(View v){
         Toast.makeText(this, ((Button)v).getText(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Orders.this, MainActivity.class);
+        Intent intent = new Intent(Orders.this, OrderListActivity.class);
         startActivity(intent);
 
     }

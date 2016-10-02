@@ -10,7 +10,10 @@ urls = (
 	'/signup', 'signup',
 	'/vsignup', 'get_vsignup',
 	'/vsignin', 'get_vsignin',
-	'/placeorder', 'place_order'
+	'/placeorder', 'place_order',
+	'/showorders/(.*)', 'show_orders',
+	'/getorderdetails/(.*)','get_order_details'
+	
 	)
 
 app = web.application(urls, globals())
@@ -170,9 +173,12 @@ class get_vsignin:
        query = ("select * from vendortable where v_username = '{}' and v_password = '{}'".format(username, password)) 
        print "Query: "+ query
        cursor.execute(query)
+       returnvendorid = ''
+
 			 
        for(v_id , v_username, v_password) in cursor:
-           count +=1
+         returnvendorid = v_id
+         count +=1
 			 
        cursor.close()
        con.close()
@@ -183,7 +189,12 @@ class get_vsignin:
            response = "FAIL"
        else:
            response = "SUCCESS" 
-       return response
+       
+       vendor_json={}
+       vendor_json['vendor_id']=returnvendorid
+       vendor_json['status']=response  
+       print json.dumps(vendor_json)  
+       return json.dumps(vendor_json)
     	
 
 class place_order:
@@ -212,7 +223,7 @@ class place_order:
 
        itemids = jsondata["item_ids"]
        for item_id in itemids:
-           query = ("insert into orders(o_id, R_ID, u_id, Item_ID, status) values({},{},{},{},'PENDING')".format(orderid[0], restaurantid, userid, item_id))
+           query = ("insert into orders(o_id, R_ID, u_id, Item_ID) values({},{},{},{})".format(orderid[0], restaurantid, userid, item_id))
            print "Executing query: " + query
            cursor.execute(query)
            
@@ -221,7 +232,92 @@ class place_order:
        cursor.close()
        con.close()
        
+       
+class show_orders:
+	def GET(self, ID):
+		json_data = []
+		con = mysql.connector.connect(user = 'root', password = 'root', database = 'food')
+		cursor = con.cursor()
+		query = ("select * from ordertable where R_ID = {} and status = 'PENDING' order by o_id DESC".format(ID))
+		print "Query: " + query
+		cursor.execute(query)
+		
+		for(o_id, u_id, R_ID, total, dateAndTime, status) in cursor:
+			data = {}
+			data['orderid'] =o_id
+			data['u_id'] = u_id
+			data['u_name'] = self.get_user_name(u_id)
+			data['R_ID'] = R_ID
+			data['total'] = total
+			data['time']= dateAndTime
+			data['status'] = status 
+			json_data.append(data)
 			
+		cursor.close()
+		con.close()
+
+		order_json = {}
+		order_json['order'] = json_data
+		print str(json.dumps(order_json))
+		return json.dumps(order_json)
+		
+	def get_user_name(self, u_id):
+		username = u_id
+		con = mysql.connector.connect(user = 'root', password = 'root', database = 'food')
+		cursor = con.cursor()
+		query = ("select user_name from usertable where u_id = {}".format(u_id))
+		print "Query: " + query
+		cursor.execute(query)
+		
+		for(user_name) in cursor:
+			username = user_name[0]
+			break
+		
+		cursor.close()
+		con.close()
+		
+		return username
+		
+
+class get_order_details:
+	def GET(self, order_id):
+		json_data = []
+		con = mysql.connector.connect(user = 'root', password = 'root', database = 'food')
+		cursor = con.cursor()
+		query = ("select * from orders where o_id = {}".format(order_id))
+		print "Query: " + query
+		cursor.execute(query)
+		
+		for(o_id,Item_Name, R_ID, u_id, Item_ID) in cursor:
+			item = self.get_item(Item_ID)
+			json_data.append(item)
+			
+		cursor.close()
+		con.close()
+			
+		details_json = {}
+		details_json['orderdetails'] = json_data
+		print str(json.dumps(details_json))
+		return json.dumps(details_json)
+		
+		
+	def get_item(self, item_id):
+		con = mysql.connector.connect(user = 'root', password = 'root', database = 'food')
+		cursor = con.cursor()
+		query = ("select Item_ID,Item_Name,Item_Price from Menu where Item_ID = {}".format(item_id))
+		print "Query: " + query
+		cursor.execute(query)
+		
+		item = {}
+		for(Item_ID, Item_Name, Item_Price) in cursor:
+			item['item_name'] = Item_Name 
+			item['item_cost'] = Item_Price
+			item['item_id'] = Item_ID
+			break
+		
+		cursor.close()
+		con.close()
+		return item
 
 if __name__=="__main__":
 	app.run()

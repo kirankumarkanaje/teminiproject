@@ -20,7 +20,8 @@
         <activity android:name=".SignIn"/>
         <activity android:name=".Orders"/>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".OrderListActivity"/>
+        <activity android:name=".OrderDetailsActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
